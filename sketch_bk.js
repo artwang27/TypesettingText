@@ -1,21 +1,20 @@
+let img;    //可以是彩色的
+let img2;   //img 的備份，用來製作 filter 所產生的圖形，所以呈現出黑白兩色
+function preload() {
+    img = loadImage('assets/03.jpg');
+}
 
 
-
-let pg;
 function setup() {
-    pg = createGraphics(600, 50);
-    pg.noFill();
-    pg.rect(0, 0, 600, 50);
-
-    pg.fill(0,255,0);
-    pg.textSize(32);
-    pg.text('王鐙儀', 0, 32);
+    img2 = new p5.Image(img.width, img.height);
 
     layout();
 
-	let canvas=createCanvas(600, 300);
-    canvas.position(300,0);
-    
+    let canvas = createCanvas(800, 600);
+    canvas.position(300, 0);
+
+    //duplicate(img, img2);
+    changeImageContrast();
 
     reDraw();
 }
@@ -28,16 +27,12 @@ function draw() {
 
 
 //圖形重新繪製，並過濾成黑白兩色
-function reDraw(){
+function reDraw() {
     clear();
+    image(img2, 0, 0);
 
-    /*
-    textSize(32);
-    text('word', 0, 32);
-    rect(10, 10, 55, 55);
-    */
-
-    image(pg,0,0);
+    //textSize(32);
+    //text('word', 18, 32);
 }
 
 
@@ -48,7 +43,7 @@ function LetterTest() {
 
     //重畫螢幕，因為上面可能有輔助格線，這次不要畫格線
     print("LetterTest");
-    //reDraw();
+    reDraw();
     resetFont();
 
 
@@ -75,20 +70,20 @@ lines：共有幾行
 spx：字距，字與字的距離 
 spy：字距，字與字的距離
 */
-function SamplingStrings(letterPerLine, lines, startx, starty,spx, spy){
-    let letterAry=[];
+function SamplingStrings(letterPerLine, lines, startx, starty, spx, spy) {
+    let letterAry = [];
 
     let y = starty;
-    for(let j=0; j<lines; j++){
-        let x=startx;
-       
-        for(let i=0; i<letterPerLine; i++){
-            let L=new Letter(x,y,Font.dx, Font.dy);
+    for (let j = 0; j < lines; j++) {
+        let x = startx;
+
+        for (let i = 0; i < letterPerLine; i++) {
+            let L = new Letter(x, y, Font.dx, Font.dy);
             letterAry.push(L);
-            
-            x+=spx;
+
+            x += spx;
         }
-        y+=spy;
+        y += spy;
     }
 
     return letterAry;
