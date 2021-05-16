@@ -2,6 +2,7 @@
 */
 
 
+//字體的取樣選項
 class Font {
     static Width = 5;
     static Height = 7;
@@ -9,13 +10,13 @@ class Font {
     static dy=5;   //點與點的距離
     static BlackThresold = 30;  //亮度閥值，小於此值則視為黑色
     static BlackBool = true;  //若為黑色，則其 bool 將被設為 true 或 false ?
-
-
 }//Font
 
 
+//擷取字串的主函式
 class Letter {
-    constructor(startX, startY, dx=Font.dx, dy=Font.dy, fontWidth=Font.Width, fontHeight=Font.Height) {
+    constructor(pg, startX=0, startY=0, dx=Font.dx, dy=Font.dy, fontWidth=Font.Width, fontHeight=Font.Height) {
+        this.pg=pg;
         this.FontWidth= fontWidth;
         this.FontHeight= fontHeight;
         this.compareFunction= this.compareBlack;
@@ -67,21 +68,22 @@ class Letter {
       return bits;
    }
 
-   //預設：傳回偵測到的某一個顏色，此顏色其實是個陣列(裡面有四個元素，分別代表 r,g,b,a)
-   //若未定義 compareFunction，則傳回顏色
-   //否則依照 compareFunction 所定義，傳回指定的型別
-   extract(x, y, dx, dy, compareFunction) {
-       //print("x= "+x);
-       //print("y= "+y);
-      let c = get(x, y);   //萃取顏色
-      //print(c);
-      
-      //paintBox(x, y, dx, dy, c);
+    //預設：傳回偵測到的某一個顏色，此顏色其實是個陣列(裡面有四個元素，分別代表 r,g,b,a)
+    //若未定義 compareFunction，則傳回顏色
+    //否則依照 compareFunction 所定義，傳回指定的型別
+    extract(x, y, dx, dy, compareFunction) {
+        //print("x= "+x);
+        //print("y= "+y);
+        //let c = get(x, y);   //萃取顏色
+        let c = this.pg.get(x, y);   //萃取顏色
+        //print(c);
 
-      //若 colorAs 有定義，則繼續執行 colorAs 函式，否則直接傳回陣列(裡面有四個元素，分別代表 r,g,b,a)
-      if (compareFunction) return compareFunction(c);
-      else return c;
-   }
+        //paintBox(x, y, dx, dy, c);
+
+        //若 colorAs 有定義，則繼續執行 colorAs 函式，否則直接傳回陣列(裡面有四個元素，分別代表 r,g,b,a)
+        if (compareFunction) return compareFunction(c);
+        else return c;
+    }
 
     //------------------------------------------------------------------
 

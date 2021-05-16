@@ -15,6 +15,7 @@ function colorEqual(a, b) {
 }
 
 
+//把拼字的結果以文字方式印到 html 網頁上
 //把拼字用的字串陣列印到 html上
 function showStringArrayHtml(strAry) {
     let s = "";
@@ -26,16 +27,14 @@ function showStringArrayHtml(strAry) {
 }
 
 //把取樣結果畫到 canvas 上
-function drawLetterToCanvas() {
-    reDraw();
-
-    let startx = float(dom.startx.value());    //22;
-    let starty = float(dom.starty.value());    //15;
+function drawSampleToCanvas() {
+    let startx=0;
+    let starty=0;
     let dx = float(Font.dx);
     let dy = float(Font.dy);
 
     //先取樣
-    let L = new Letter(startx, starty);
+    let L = new Letter();
     let colorAry=L.asColors(startx, starty, dx, dy);
     
     push();
@@ -65,9 +64,19 @@ function drawLetterToCanvas() {
 }
 
 
-function drawFontGrid() {
-    reDraw();
 
+//複製 image 圖像
+function duplicate(src, dst){
+    let w=src.width;
+    let h=src.height;
+    dst.copy(src,0,0,w,h,0,0,w,h);
+
+}
+
+
+/*
+//畫出取樣框格
+function drawFontGrid() {
     let startx = float(dom.startx.value());
     let starty = float(dom.starty.value());
     let dx = Font.dx;
@@ -90,11 +99,33 @@ function drawFontGrid() {
 
     pop();
 }
+*/
 
-//複製 image 圖像
-function duplicate(src, dst){
-    let w=src.width;
-    let h=src.height;
-    dst.copy(src,0,0,w,h,0,0,w,h);
 
+/*
+//取樣字串裡的每個點
+//letterPerLine：一行有幾個字
+//lines：共有幾行
+//spx：字距，字與字的距離
+//spy：字距，字與字的距離
+
+function SamplingStrings(letterPerLine, lines, startx, starty, spx, spy) {
+    let letterAry = [];
+
+    let y = starty;
+    for (let j = 0; j < lines; j++) {
+        let x = startx;
+
+        for (let i = 0; i < letterPerLine; i++) {
+            let L = new Letter(x, y, Font.dx, Font.dy);
+            letterAry.push(L);
+
+            x += spx;
+        }
+        y += spy;
+    }
+
+    return letterAry;
 }
+
+*/
